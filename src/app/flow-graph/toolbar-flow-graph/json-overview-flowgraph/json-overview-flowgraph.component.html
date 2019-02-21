@@ -1,0 +1,18 @@
+
+<button mat-dialog-close mat-mini-fab color="primary" style = 'left: 95%; width: 40px; height: 40px'>
+        <mat-icon >close</mat-icon>
+</button> 
+      
+      <div mat-dialog-content>
+          <ngx-json-viewer [json]="jsonData"></ngx-json-viewer>
+      </div>
+
+      <mat-dialog-actions align="center">
+          <button mat-icon-button ngxClipboard [cbContent]="currentData" (click)="openSnackBar()">
+              <mat-icon>content_copy</mat-icon>
+          </button>
+      </mat-dialog-actions>
+      
+      
+      
+      

@@ -1,0 +1,43 @@
+
+
+    <table mat-table [dataSource]="data" multiTemplateDataRows class="mat-elevation-z8">
+      
+        <ng-container matColumnDef="TimeStamp">
+          <th mat-header-cell *matHeaderCellDef>TimeStamp</th>
+          <td mat-cell *matCellDef="let element">{{element.TimeStamp | date :'short'}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Comment">
+          <th mat-header-cell *matHeaderCellDef>Comment</th>
+          <td mat-cell *matCellDef="let element">{{element.Comment}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+
+
+                  <!-- <button *ngIf="router.url === '/flow_graph';"	mat-icon-button color="primary" (click)="onClickLoadXML(element.XML)" >
+                    <mat-icon>open_in_browser</mat-icon>
+                  </button> -->
+
+                  <button	*ngIf="router.url === '/flow_graph';" mat-icon-button color="primary" (click)= "clickStopper($event); onClickDelete(parentData._id,element);">
+                    <mat-icon>delete</mat-icon>
+                  </button> 
+                  
+                  <!-- <button *ngIf="router.url === '/new_intent';"	mat-icon-button color="primary"  (click)="OnClickCopyJSON(element.JSON)" >
+                    <mat-icon>file_copy</mat-icon>
+                  </button> -->
+                  
+            </td>
+          </ng-container>
+         
+       
+
+
+      <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row"
+        (click)="onClickCopyLoad(element)">
+      </tr>
+    </table>
+  
+  

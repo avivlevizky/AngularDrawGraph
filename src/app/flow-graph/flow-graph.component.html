@@ -1,0 +1,8 @@
+<mat-grid-list cols="16" rows="7">
+  <mat-grid-tile colspan = "1" rowspan="7">
+      <app-ng-toolbar-graph [toolbar] = 'toolbar' [graph] = 'graph' [editor] = 'editor' [codec] = 'codec'></app-ng-toolbar-graph>
+  </mat-grid-tile>
+  <mat-grid-tile colspan = "15" rowspan="7">
+      <div #graphContainer id="graphContainer" style="width: 100%; height: 100%;"></div>
+  </mat-grid-tile>
+</mat-grid-list>

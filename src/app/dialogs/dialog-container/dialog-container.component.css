@@ -1,0 +1,10 @@
+.mat-dialog-container {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    max-height: 600px !important;
+    width:95%;
+    overflow: auto;
+    margin: 50px auto auto auto;
+}
+  

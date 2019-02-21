@@ -1,0 +1,44 @@
+.mat-dialog-content{
+    margin: 0px;
+    margin-top: 12px;
+    max-width: 100%;
+    max-height: 400px;
+    overflow-y: hidden;
+}
+
+
+.mat-dialog-actions{
+    margin-bottom: 5px
+}
+
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.ops {
+    opacity :0;
+}
+
+
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.mat-card-content{
+    max-height: 300px;
+}
+
+.table-content{
+    overflow-y: scroll;
+
+}
+
+table{
+    width: 100%;
+
+}

@@ -1,0 +1,19 @@
+
+
+.mat-dialog-content{
+    margin: 0px;
+}
+
+.mat-dialog-actions{
+    margin-bottom: 5px
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+.text-container > * {
+    width: 100%;
+  }
+  
