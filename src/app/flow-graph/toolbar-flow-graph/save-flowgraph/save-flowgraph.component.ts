@@ -34,10 +34,10 @@ export class SaveFlowgraphComponent implements OnInit, OnDestroy {
   isExistingGraph: boolean;
 
   constructor(private flowGraphItemService: FlowGraphItemService,
-    public dialogRef: MatDialogRef<SaveFlowgraphComponent>,
-    @Inject(MAT_DIALOG_DATA) data: any,
-    public snackBar: MatSnackBar,
-    private loaderService: LoaderService) {
+              public dialogRef: MatDialogRef<SaveFlowgraphComponent>,
+              @Inject(MAT_DIALOG_DATA) data: any,
+              public snackBar: MatSnackBar,
+              private loaderService: LoaderService) {
       this.xml = data.xml;
       this.json = data.json;
       this.graphID = data._id;
@@ -106,9 +106,9 @@ export class SaveFlowgraphComponent implements OnInit, OnDestroy {
   onSaveExistGraph(event) {
     this.newFlowGraphItemForm.get('_t').setValue(this.choosenFlowGraph._t);
     this.newFlowGraphItemForm.get('_t').disable();
-    this.newFlowGraphItemForm.get('Description').setValue(this.choosenFlowGraph.Description);
+    this.newFlowGraphItemForm.get('Description').setValue(this.choosenFlowGraph.description);
     this.newFlowGraphItemForm.get('Description').disable();
-    this.newFlowGraphItemForm.get('FlowGraphs').setValue(this.choosenFlowGraph.FlowGraphs);
+    this.newFlowGraphItemForm.get('FlowGraphs').setValue(this.choosenFlowGraph.flowGraphs);
     // console.info(this.newFlowGraphModelsForm.get('TimeStamp').value);
 
   }
@@ -116,7 +116,7 @@ export class SaveFlowgraphComponent implements OnInit, OnDestroy {
   onSubmit(event) {
     try {
        let isSuccessfulRequest: boolean;
-      if (!this.isExistingGraph) { // New FlowGraph item
+       if (!this.isExistingGraph) { // New FlowGraph item
         const formFlowGraphItem = Object.assign({}, this.newFlowGraphItemForm.value);
         formFlowGraphItem.FlowGraphs = [formFlowGraphItem.FlowGraphs];
         formFlowGraphItem.FlowGraphs[0].JSON._t = formFlowGraphItem._t;
@@ -128,12 +128,12 @@ export class SaveFlowgraphComponent implements OnInit, OnDestroy {
         });
       }
 
-      if (this.isExistingGraph) { // Add exist to FlowGraph item
+       if (this.isExistingGraph) { // Add exist to FlowGraph item
         const clonedObject: FlowGraphModelItem = Object.assign({}, this.newFlowGraphModelsForm.value) ;
-        const clonedObjectJSON: any = clonedObject.JSON;
+        const clonedObjectJSON: any = clonedObject.json;
         clonedObjectJSON._t = this.choosenFlowGraph._t;
-        clonedObject.JSON = JSON.stringify(clonedObjectJSON);
-        this.choosenFlowGraph.FlowGraphs.push(clonedObject);
+        clonedObject.json = JSON.stringify(clonedObjectJSON);
+        this.choosenFlowGraph.flowGraphs.push(clonedObject);
         this.flowGraphItemService.updateFlowGraphItem(this.choosenFlowGraph._id, this.choosenFlowGraph)
         .subscribe({
           next: respond => isSuccessfulRequest = respond,

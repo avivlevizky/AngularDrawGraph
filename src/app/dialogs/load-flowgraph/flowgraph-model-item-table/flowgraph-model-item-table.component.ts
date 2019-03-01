@@ -14,33 +14,26 @@ import { LoadFlowGraphComponent } from '../load-flowgraph.component';
   styleUrls: ['./flowgraph-model-item-table.component.css']
 })
 export class FlowGraphModelItemTableComponent {
-  @Input('data') data: FlowGraphModelItem[];
-  @Input('parentData') parentData: FlowGraphItem;
-  @Input('dialogRef') dialogRef: MatDialogRef<LoadFlowGraphComponent>;
+  @Input() data: FlowGraphModelItem[];
+  @Input() parentData: FlowGraphItem;
+  @Input() dialogRef: MatDialogRef<LoadFlowGraphComponent>;
 
 
   displayedColumns: string[] = [ 'Actions', 'TimeStamp', 'Comment'];
 
   constructor(private database: FlowGraphItemService,
-     private impotGraphService: ImportGraphService,
-     public router: Router,
-     private importGraphService: ImportGraphService,
-     public snackBar: MatSnackBar,
-     public dialog: MatDialog) {}
+              private impotGraphService: ImportGraphService,
+              public router: Router,
+              private importGraphService: ImportGraphService,
+              public snackBar: MatSnackBar,
+              public dialog: MatDialog) {}
 
 
   onClickCopyLoad(element: FlowGraphModelItem) {
     try {
-      if (this.router.url === '/flow_graph') {
-        this.impotGraphService.ImportXmlGraph(this.parentData._id, this.parentData._t, element.XML);
-        this.snackBar.open('FlowGraph is loaded successfully', null, {duration: 1500});
-      }
-
-      if (this.router.url === '/new_intent') {
-        this.importGraphService.ImportCopyJSON(element.JSON);
-        this.snackBar.open('JSON graph is copied', null, {duration: 1500});
-      }
-
+      console.log(element);
+      this.impotGraphService.ImportXmlGraph(this.parentData._id, this.parentData._t, element.xml);
+      this.snackBar.open('FlowGraph is loaded successfully', null, {duration: 1500});
       this.dialogRef.close();
     } catch (e) {
       this.snackBar.open('Unable to complete the operation', null, {duration: 1500});
@@ -66,7 +59,7 @@ export class FlowGraphModelItemTableComponent {
 
       }
 
-      this.dialog.open(LoadFlowGraphComponent, {width: '700px', height: '500px'});
+        this.dialog.open(LoadFlowGraphComponent, {width: '700px', height: '500px'});
       }
     });
   }

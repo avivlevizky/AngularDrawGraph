@@ -67,7 +67,7 @@ export class ToolbarGraphComponent implements OnInit {
     // Function that is executed when the image is dropped on
     // the graph. The cell argument points to the cell under
     // the mousepointer if there is one.
-    const funct = function(g, evt, cell) {
+    const funct = (g, evt, cell) => {
       graph.stopEditing(false);
       const pt = g.getPointForEvent(evt);
       const vertex = g.getModel().cloneCell(prototype);
@@ -137,10 +137,11 @@ export class ToolbarGraphComponent implements OnInit {
   private exportGraphTojson() {
     const nodesDict: {[id: number]: Vertex} = {};
     const yCorrdinates: {[id: number]: number} = {};
-    const Vertices: Vertex[] = [], Edges: Edge[] = [];
+    const vertices: Vertex[] = [];
+    const edges: Edge[] = [];
     const mxCells: {[id: number]: mxCell} = this.graph.model.cells;
-    const _t: string = this.graph.model.graphTitle;
-    const _id: string = this.graph.model.graphID;
+    const graphTitle: string = this.graph.model.graphTitle;
+    // const _id: string = this.graph.model.graphID;
     const graph = Graph();
     let type = null;
 
@@ -182,32 +183,32 @@ export class ToolbarGraphComponent implements OnInit {
               break;
             }
           }
-          graph.addNode(parseInt(id, 10));
-          nodesDict[parseInt(id, 10)] = {Type: type, Text: mxCells[id].value, VertexId: parseInt(id, 10)};
-          yCorrdinates[parseInt(id, 10)] = mxCells[id].geometry.y;
+        graph.addNode(parseInt(id, 10));
+        nodesDict[parseInt(id, 10)] = {Type: type, Text: mxCells[id].value, VertexId: parseInt(id, 10)};
+        yCorrdinates[parseInt(id, 10)] = mxCells[id].geometry.y;
         }
 
-        if (mxCells[id].edge) {
+      if (mxCells[id].edge) {
           graph.addEdge(parseInt(mxCells[id].source.id, 10), parseInt(mxCells[id].target.id, 10));
-          Edges.push({Start: parseInt(mxCells[id].source.id, 10), End: parseInt(mxCells[id].target.id, 10), Cond: mxCells[id].value});
+          edges.push({Start: parseInt(mxCells[id].source.id, 10), End: parseInt(mxCells[id].target.id, 10), Cond: mxCells[id].value});
         }
       }
 
-      const graphVertices: number[] = graph.topologicalSort();
+    const graphVertices: number[] = graph.topologicalSort();
 
-      for (let i = 0; i < graphVertices.length; i++) {
-        const parentId: number =  graphVertices[i].valueOf();
-        if (!Vertices.find((node) => (node.VertexId === parentId))) {
-          Vertices.push(nodesDict[parentId]);
+    for (const v of graphVertices) {
+        const parentId: number =  v.valueOf();
+        if (!vertices.find((node) => (node.VertexId === parentId))) {
+          vertices.push(nodesDict[parentId]);
         }
 
         const childrensVertices: number[] = graph.adjacent(parentId);
         childrensVertices.sort((n1, n2) =>  yCorrdinates[n1] - yCorrdinates[n2]);
-        childrensVertices.forEach((nodeId) => Vertices.push(nodesDict[nodeId]));
+        childrensVertices.forEach((nodeId) => vertices.push(nodesDict[nodeId]));
 
       }
 
-      return {_t, Vertices, Edges};
+    return {graphTitle, vertices, edges};
 
 
   }

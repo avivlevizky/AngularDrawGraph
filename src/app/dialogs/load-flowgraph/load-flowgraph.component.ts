@@ -32,10 +32,10 @@ export class LoadFlowGraphComponent extends ContainedDialogBase implements OnIni
 
 
   constructor(private database: FlowGraphItemService,
-    public loaderService: LoaderService,
-    public dialogRef: MatDialogRef<LoadFlowGraphComponent>,
-    public snackBar: MatSnackBar,
-    public dialogContainerService: DialogContainerService) {
+              public loaderService: LoaderService,
+              public dialogRef: MatDialogRef<LoadFlowGraphComponent>,
+              public snackBar: MatSnackBar,
+              public dialogContainerService: DialogContainerService) {
       super();
       this.dataSource = new MatTableDataSource<FlowGraphItem> ();
     }
@@ -47,7 +47,9 @@ export class LoadFlowGraphComponent extends ContainedDialogBase implements OnIni
     this.subscription = this.database.getAllFlowGraphItems().subscribe({
       next: data => this.dataSource.data = data,
       error: err => console.error(err),
-      complete: () => {this.isLoadingResults = false; }
+      complete: () => {this.isLoadingResults = false;
+                       console.log(this.dataSource.data);
+                       }
     });
   }
 

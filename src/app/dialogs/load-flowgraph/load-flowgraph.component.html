@@ -22,22 +22,26 @@
 
       <ng-container matColumnDef="Description">
         <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell *matCellDef="let element">{{element.Description}}</td>
+        <td mat-cell *matCellDef="let element">{{element.description}}</td>
       </ng-container>
 
      
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-          <div class="element-detail" [@detailExpand]="element.FlowGraphs == expandedElement ? 'expanded' : 'collapsed'">
-           <app-flowgraph-model-item-table [data]="expandedElement" [parentData]="element" 
-           [dialogRef]="dialogRef" style="width:100%;"></app-flowgraph-model-item-table>
+          <div class="element-detail" [@detailExpand]="element.flowGraphs == expandedElement ? 'expanded' : 'collapsed'">
+           <app-flowgraph-model-item-table 
+           [data]="expandedElement" 
+           [parentData]="element" 
+           [dialogRef]="dialogRef" 
+           style="width:100%;">
+          </app-flowgraph-model-item-table>
           </div>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row" [class.expanded-row]="expandedElement === element.FlowGraphs"
-      (click)="expandedElement = expandedElement == element.FlowGraphs ? null : element.FlowGraphs"></tr>
+      <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row" [class.expanded-row]="expandedElement === element.flowGraphs"
+      (click)="expandedElement = expandedElement == element.flowGraphs ? null : element.flowGraphs"></tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
     </table>
  </div>
