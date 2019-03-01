@@ -14,9 +14,9 @@ import {FlowGraphItem} from '../_models/flowgraph-item';
 })
 export class FlowGraphItemService {
 
-  constructor(private _http: HttpClient, private snack: MatSnackBar) {}
+  constructor(private http: HttpClient, private snack: MatSnackBar) {}
 
-  private base_url = `${environment.apiUrl}/api/FlowGraph`;
+  private baseUrl = `${environment.apiUrl}/api/FlowGraph`;
 
   // GetHttpHeaders(): HttpHeaders {
   //     const headers = new HttpHeaders().set('content-type', 'application/json');
@@ -24,8 +24,8 @@ export class FlowGraphItemService {
   // }
 
   getAllFlowGraphItems(): Observable<FlowGraphItem[]> {
-    return this._http.get<FlowGraphItem[]>(`${this.base_url}/get`,
-    {withCredentials: true});
+    return this.http.get<FlowGraphItem[]>(`${this.baseUrl}/`,
+    {withCredentials: false});
   }
 
 
@@ -34,13 +34,13 @@ export class FlowGraphItemService {
     const paramsItem = new HttpParams()
     .set('id', id);
 
-    return this._http.put<boolean>(`${this.base_url}/put` + id, item,
-      {withCredentials: true});
+    return this.http.put<boolean>(`${this.baseUrl}/` + id, item,
+      {withCredentials: false});
   }
 
   insertFlowGraphItem(item: FlowGraphItem) {
-    return this._http.post<boolean>(`${this.base_url}/post`, item,
-        {withCredentials: true});
+    return this.http.post<boolean>(`${this.baseUrl}/`, item,
+        {withCredentials: false});
   }
 
 

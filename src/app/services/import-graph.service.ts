@@ -21,8 +21,8 @@ export class ImportGraphService {
   }
 
 
-  ImportXmlGraph(_id?, _t?, xml?: string) {
-    this.subjectXmlGraph.next({_id, _t, xml});
+  ImportXmlGraph(id?, t?, xml?: string) {
+    this.subjectXmlGraph.next({id, t, xml});
   }
 
 
