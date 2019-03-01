@@ -4,7 +4,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatTabGroup} from
 import {Vertex, Edge, JsonGraph} from '../../_models/mxgraph';
 import { SaveFlowgraphComponent } from './save-flowgraph/save-flowgraph.component';
 import { JsonOverviewFlowGraphComponent } from './json-overview-flowgraph/json-overview-flowgraph.component';
-import { LoadFlowGraphComponent } from 'src/app/dialogs/load-flowgraph/load-flowgraph.component';
+import { LoadFlowGraphComponent } from './load-flowgraph/load-flowgraph.component';
 import { ImportGraphService } from 'src/app/services/import-graph.service';
 import { ShapeFlowType } from 'src/app/_models/enums';
 

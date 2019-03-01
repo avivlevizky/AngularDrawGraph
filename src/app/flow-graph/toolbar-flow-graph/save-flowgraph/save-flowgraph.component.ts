@@ -1,13 +1,11 @@
-import {SelectionModel} from '@angular/cdk/collections';
-import {Component, OnInit, ViewChild, ElementRef, Input, Inject, OnDestroy} from '@angular/core';
-import {MatTableDataSource, MatTabGroup, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatCard} from '@angular/material';
+import {Component, OnInit, Inject, OnDestroy} from '@angular/core';
+import {MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
 import { FlowGraphItem, FlowGraphModelItem } from 'src/app/_models/flowgraph-item';
 import { FlowGraphItemService } from 'src/app/services/flowgraph-item.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { Intent } from 'src/app/_models/intent';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/internal/operators/map';
 import { LoaderService } from 'src/app/services/loader.service';
+import { MatCardType } from 'src/app/_models/enums';
 
 
 
@@ -164,9 +162,5 @@ export class SaveFlowgraphComponent implements OnInit, OnDestroy {
 
 }
 
-export enum MatCardType {
-  newSave,
-  newSaveForm
-}
 
 

@@ -24,3 +24,9 @@ export const enum ConversationPushNotifyWrapperAction {
     Add,
     Remove
 }
+
+
+export enum MatCardType {
+    newSave,
+    newSaveForm
+  }

@@ -1,13 +1,12 @@
-import {HttpClient} from '@angular/common/http';
-import {Component, OnInit, ViewChild, Inject, OnDestroy} from '@angular/core';
-import {MatPaginator, MatSort, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatTableDataSource} from '@angular/material';
-import {FlowGraphItem, FlowGraphModelItem} from '../../_models/flowgraph-item';
-import {FlowGraphItemService} from 'src/app/services/flowgraph-item.service';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {MatDialogRef, MatSnackBar, MatTableDataSource} from '@angular/material';
+import {FlowGraphItem, FlowGraphModelItem} from '../../../_models/flowgraph-item';
+import {FlowGraphItemService} from '../../../services/flowgraph-item.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { LoaderService } from 'src/app/services/loader.service';
+import { LoaderService } from '../../../services/loader.service';
 import { Subscription } from 'rxjs';
-import { ContainedDialogBase } from 'src/app/_models/dialog-models';
-import { DialogContainerService } from 'src/app/services/dialog-container.service';
+import { ContainedDialogBase } from '../../../_models/dialog-models';
+import { DialogContainerService } from '../../../services/dialog-container.service';
 
 @Component({
   selector: 'app-load-flowgraph',
