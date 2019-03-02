@@ -9,5 +9,5 @@ export interface FlowGraphModelItem {
     timeStamp: Date;
     comment: string;
     xml: string;
-    json: string;
+    json: any;
 }

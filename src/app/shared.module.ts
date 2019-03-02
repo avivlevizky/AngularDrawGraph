@@ -7,7 +7,6 @@ import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { LoaderModule } from './loader/loader.module';
 import { ImportGraphService } from './services/import-graph.service';
 import { LoaderService } from './services/loader.service';
-import { DialogContainerComponent } from './dialogs/dialog-container/dialog-container.component';
 import { DialogContainerService } from './services/dialog-container.service';
 import { WebAPIService } from './services/web-api.service';
 

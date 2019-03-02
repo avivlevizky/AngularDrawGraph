@@ -1,120 +1,94 @@
-
-
-<app-loader show = 'true'></app-loader>
-<button mat-dialog-close mat-mini-fab color="primary" style = 'left: 95%; width: 40px; height: 40px'>
-    <mat-icon >close</mat-icon>
-</button> 
+<app-loader show='true'></app-loader>
+<button mat-dialog-close mat-mini-fab color="primary" style='left: 95%; width: 40px; height: 40px'>
+  <mat-icon>close</mat-icon>
+</button>
 <div [class.ops]="isLoadingResults">
-<div mat-dialog-content>
+  <div mat-dialog-content>
 
-  <mat-card #newSave *ngIf="matCardName === 0">
-    <mat-form-field>
+    <mat-card #newSave *ngIf="matCardName === 0">
+      <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
+      </mat-form-field>
       <mat-card-content class="table-content">
-      <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
-        <ng-container matColumnDef="choose">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">
-            <mat-radio-button (click)="onRadioClick(element)" [checked] = "element._id == graphID">
-            </mat-radio-button>
-          </td>
-        </ng-container>
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+          <ng-container matColumnDef="choose">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <mat-radio-button (click)="onRadioClick(element)" [checked]="element._id == graphID">
+              </mat-radio-button>
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="_id">
-          <th mat-header-cell *matHeaderCellDef>ID</th>
-          <td mat-cell *matCellDef="let element">{{element._id}}</td>
-        </ng-container>
-  
-        <ng-container matColumnDef="_t">
-          <th mat-header-cell *matHeaderCellDef>Title</th>
-          <td mat-cell *matCellDef="let element">{{element._t}}</td>
-        </ng-container>
-  
-        <ng-container matColumnDef="Description">
-          <th mat-header-cell *matHeaderCellDef>Description</th>
-          <td mat-cell *matCellDef="let element">{{element.description}}</td>
-        </ng-container>
-  
-       
-       
-  
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row"></tr>
-      </table>
-       
+          <ng-container matColumnDef="_id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element">{{element._id}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="_t">
+            <th mat-header-cell *matHeaderCellDef>Title</th>
+            <td mat-cell *matCellDef="let element">{{element._t}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="Description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let element">{{element.description}}</td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row"></tr>
+        </table>
+
       </mat-card-content>
-  </mat-card>
-
-
-
-  <mat-card #newSaveForm *ngIf="matCardName === 1">
-        <mat-card-content>
-        <form [formGroup]="newFlowGraphItemForm"> 
-          <div class="form-container">     
-              <mat-form-field>
-                  <input matInput placeholder="NameID" formControlName="_t" >
-                </mat-form-field>
-                <mat-form-field>
-                    <textarea matInput placeholder="Description" formControlName="Description"  matTextareaAutosize> </textarea>
-                </mat-form-field>
-                <form [formGroup]="newFlowGraphModelsForm">
-                  <div class="form-container"> 
-                    <mat-form-field>
-                        <textarea matInput placeholder="Comment" formControlName="Comment" matTextareaAutosize></textarea>
-                    </mat-form-field>
-                  </div>
-                </form>
-           </div>
-          </form>
-        </mat-card-content>
     </mat-card>
 
 
-</div>
+
+    <mat-card #newSaveForm *ngIf="matCardName === 1">
+      <mat-card-content>
+        <form [formGroup]="newFlowGraphItemForm">
+          <div class="form-container">
+            <mat-form-field>
+              <input matInput placeholder="NameID" formControlName="_t">
+            </mat-form-field>
+            <mat-form-field>
+              <textarea matInput placeholder="Description" formControlName="description"
+                matTextareaAutosize> </textarea>
+            </mat-form-field>
+            <form [formGroup]="newFlowGraphModelsForm">
+              <div class="form-container">
+                <mat-form-field>
+                  <textarea matInput placeholder="Comment" formControlName="comment" matTextareaAutosize></textarea>
+                </mat-form-field>
+              </div>
+            </form>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+
+  </div>
 
 
 
-<mat-dialog-actions align="center">
-    <button type="button" 
-           *ngIf="matCardName === 0" 
-           mat-raised-button color="primary" 
-           (click)="matCardName = 1;onSaveExistGraph();" 
-           [disabled]="!isExistingGraph">
-        Save
+  <mat-dialog-actions align="center">
+    <button type="button" *ngIf="matCardName === 0" mat-raised-button color="primary"
+      (click)="matCardName = 1;onSaveExistGraph();" [disabled]="!isExistingGraph">
+      Save
     </button>
 
-    <button 
-        type="button" 
-        *ngIf="matCardName === 0" 
-        mat-raised-button color="primary" 
-        (click)="matCardName = 1; isExistingGraph = false;">
-        Save As
+    <button type="button" *ngIf="matCardName === 0" mat-raised-button color="primary"
+      (click)="matCardName = 1; isExistingGraph = false;">
+      Save As
     </button>
 
-  <button 
-    type="submit" 
-    *ngIf="matCardName === 1" 
-    mat-raised-button color="primary" 
-    (click)="onSubmit($event)" 
-    [disabled]="newFlowGraphItemForm.invalid">
-    Submit
-  </button>
-  
-</mat-dialog-actions>
+    <button type="submit" *ngIf="matCardName === 1" mat-raised-button color="primary" (click)="onSubmit($event)"
+      [disabled]="newFlowGraphItemForm.invalid">
+      Submit
+    </button>
 
-
-
-
-
-
+  </mat-dialog-actions>
 
 
 </div>
-
-
-
-
-    
-
-

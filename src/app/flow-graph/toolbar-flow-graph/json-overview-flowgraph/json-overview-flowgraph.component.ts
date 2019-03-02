@@ -14,7 +14,7 @@ export class JsonOverviewFlowGraphComponent {
   currentData: any;
 
   constructor(public dialogRef: MatDialogRef<JsonOverviewFlowGraphComponent>,
-    @Inject(MAT_DIALOG_DATA) data: any, public snackBar: MatSnackBar) {
+              @Inject(MAT_DIALOG_DATA) data: any, public snackBar: MatSnackBar) {
       this.jsonData = data.json;
       this.currentData = JSON.stringify(this.jsonData);
     }

@@ -2,7 +2,7 @@ import {Component, OnInit, Inject, OnDestroy} from '@angular/core';
 import {MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
 import { FlowGraphItem, FlowGraphModelItem } from 'src/app/_models/flowgraph-item';
 import { FlowGraphItemService } from 'src/app/services/flowgraph-item.service';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { LoaderService } from 'src/app/services/loader.service';
 import { MatCardType } from 'src/app/_models/enums';
@@ -85,17 +85,17 @@ export class SaveFlowgraphComponent implements OnInit, OnDestroy {
   private initNewFlowGraphForm() {
     // const flowGraphModelItem: FlowGraphModelItem = {TimeStamp: new Date(),Comment:'',XML:this.xml,JSON: this.json}
     this.newFlowGraphModelsForm = new FormGroup({
-      TimeStamp: new FormControl(new Date()),
-      Comment: new FormControl(''),
-      XML: new FormControl(this.xml),
-      JSON: new FormControl(this.json)
+      timeStamp: new FormControl(new Date()),
+      comment: new FormControl(''),
+      xml: new FormControl(this.xml),
+      json: new FormControl(this.json)
     });
 
 
     this.newFlowGraphItemForm = new FormGroup({
       _t: new FormControl('', {validators: [Validators.required]}),
-      Description: new FormControl(''),
-      FlowGraphs: this.newFlowGraphModelsForm
+      description: new FormControl(''),
+      flowGraphs: new FormArray([this.newFlowGraphModelsForm])
     });
   }
 
@@ -115,10 +115,9 @@ export class SaveFlowgraphComponent implements OnInit, OnDestroy {
     try {
        let isSuccessfulRequest: boolean;
        if (!this.isExistingGraph) { // New FlowGraph item
-        const formFlowGraphItem = Object.assign({}, this.newFlowGraphItemForm.value);
-        formFlowGraphItem.FlowGraphs = [formFlowGraphItem.FlowGraphs];
-        formFlowGraphItem.FlowGraphs[0].JSON._t = formFlowGraphItem._t;
-        formFlowGraphItem.FlowGraphs[0].JSON = JSON.stringify(formFlowGraphItem.FlowGraphs[0].JSON);
+        const formFlowGraphItem: FlowGraphItem = Object.assign({}, this.newFlowGraphItemForm.value);
+        formFlowGraphItem.flowGraphs[0].json._t = formFlowGraphItem._t;
+        formFlowGraphItem.flowGraphs[0].json = JSON.stringify(formFlowGraphItem.flowGraphs[0].json);
         this.flowGraphItemService.insertFlowGraphItem(formFlowGraphItem).subscribe({
           next: respond => isSuccessfulRequest = respond,
           error: e => console.exception('Exception when trying to save exist FlowGraph' + e),
