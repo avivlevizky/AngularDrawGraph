@@ -1,11 +1,9 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, pipe } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ConversationItem } from '../_models/conversation-item';
-import { map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 import { environment } from '../../environments/environment';
-import {FlowGraphItem} from '../_models/flowgraph-item';
+import { FlowGraphItem } from '../_models/flowgraph-item';
 
 
 

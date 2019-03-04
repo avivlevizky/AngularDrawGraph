@@ -6,8 +6,7 @@ import { FlowGraphComponent } from './flow-graph.component';
 const routes: Routes = [
   {
     path: '',
-    component: FlowGraphComponent,
-    data: {breadcrumb: 'Flow Graph'}
+    component: FlowGraphComponent
   }
 ];
 

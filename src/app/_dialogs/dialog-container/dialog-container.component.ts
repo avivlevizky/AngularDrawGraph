@@ -1,8 +1,8 @@
 // tslint:disable-next-line:max-line-length
 import { Component, OnInit, Input, ViewChild, ComponentFactoryResolver, Type, Inject, Output, Injectable, ComponentRef, OnDestroy } from '@angular/core';
 import { DynamicAnchorDirective } from './dynamic-anchor/dynamic-anchor.directive';
-import { DialogContainerService } from 'src/app/services/dialog-container.service';
-import { ContainedDialogBase, IDialogContainer } from 'src/app/_models/dialog-models';
+import { DialogContainerService } from '../../_services';
+import { ContainedDialogBase, IDialogContainer } from '../../_models';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs';
 
@@ -20,9 +20,9 @@ export class DialogContainerComponent implements OnInit, OnDestroy, IDialogConta
   subscription: Subscription;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
-    private dialogContainerService: DialogContainerService,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<any>) {
+              private dialogContainerService: DialogContainerService,
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              public dialogRef: MatDialogRef<any>) {
   }
 
   ngOnInit() {
@@ -40,8 +40,8 @@ export class DialogContainerComponent implements OnInit, OnDestroy, IDialogConta
     const viewContainerRef = this.appDynamicAnchor.viewContainerRef;
     viewContainerRef.clear();
     this.containedComponentRef = viewContainerRef.createComponent(componentFactory);
-    (<ContainedDialogBase>this.containedComponentRef.instance).inputDialogData = this.data;
-    (<ContainedDialogBase>this.containedComponentRef.instance).dialogRef = this.dialogRef;
+    ( this.containedComponentRef.instance as ContainedDialogBase).inputDialogData = this.data;
+    ( this.containedComponentRef.instance as ContainedDialogBase).dialogRef = this.dialogRef;
 
 
   }

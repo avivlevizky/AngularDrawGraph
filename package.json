@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --ssl true --ssl-cert '/Users/avivlevitski/Angular Projects/AngularDrawGraph/certs/server.crt'  --ssl-key '/Users/avivlevitski/Angular Projects/AngularDrawGraph/certs/server.key'",
+    "start": "ng serve --ssl true",
     "build": "ng build",
     "build:prod": "ng build --prod",
     "build:dev": "ng build",
@@ -25,6 +25,7 @@
     "@angular/platform-browser": "~7.2.7",
     "@angular/platform-browser-dynamic": "~7.2.7",
     "@angular/router": "~7.2.7",
+    "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "graph-data-structure": "^1.8.0",
     "mxgraph": "^3.9.12",

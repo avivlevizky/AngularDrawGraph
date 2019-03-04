@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FlowGraphModelItem, FlowGraphItem } from '../../../../_models/flowgraph-item';
-import { FlowGraphItemService } from '../../../../services/flowgraph-item.service';
-import { ImportGraphService } from '../../../../services/import-graph.service';
+import { FlowGraphModelItem, FlowGraphItem } from '../../../../_models';
+import { FlowGraphItemService } from '../../../../_services';
+import { ImportGraphService } from '../../../../_services';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { DeleteComponent } from '../../../../dialogs/delete/delete.component';
+import { DeleteComponent } from '../../../../_dialogs/delete/delete.component';
 import { LoadFlowGraphComponent } from '../load-flowgraph.component';
 
 @Component({

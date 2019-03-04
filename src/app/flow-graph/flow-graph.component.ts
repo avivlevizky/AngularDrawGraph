@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { URL_IMAGE_BACKGROUND } from './data';
 import { JsonGraph } from '../_models/mxgraph';
-import {ImportGraphService} from '../services/import-graph.service';
+import {ImportGraphService} from '../_services';
 import {Subscription, Observable} from 'rxjs';
-import { LoaderService } from '../services/loader.service';
-import { ShapeFlowType } from '../_models/enums';
+import { LoaderService } from '../_services';
+import { ShapeFlowType } from '../_models';
 @Component({
   selector: 'app-flow-graph',
   templateUrl: './flow-graph.component.html',

@@ -1,10 +1,10 @@
 import {Component, OnInit, Inject, OnDestroy} from '@angular/core';
 import {MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
-import { FlowGraphItem, FlowGraphModelItem } from 'src/app/_models/flowgraph-item';
-import { FlowGraphItemService } from 'src/app/services/flowgraph-item.service';
+import { FlowGraphItem, FlowGraphModelItem } from '../../../_models';
+import { FlowGraphItemService } from '../../../_services';
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { LoaderService } from 'src/app/services/loader.service';
+import { LoaderService } from '../../../_services';
 import { MatCardType } from 'src/app/_models/enums';
 
 

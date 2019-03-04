@@ -9,16 +9,17 @@ import { JsonOverviewFlowGraphComponent } from './toolbar-flow-graph/json-overvi
 import { FlowGraphRoutingModule } from './flow-graph-routing.module';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared.module';
-import { FlowGraphItemService } from '../services/flowgraph-item.service';
+import { FlowGraphItemService } from '../_services';
 import { AppLoadFlowGraphModule } from './toolbar-flow-graph/load-flowgraph/load-flowgraph.module';
-
+import { ToolbarManageComponent } from './toolbar-manage/toolbar-manage.component';
 
 @NgModule({
   declarations: [
     FlowGraphComponent,
     ToolbarGraphComponent,
     SaveFlowgraphComponent,
-    JsonOverviewFlowGraphComponent
+    JsonOverviewFlowGraphComponent,
+    ToolbarManageComponent
   ],
   imports: [
     CommonModule,

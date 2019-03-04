@@ -1,12 +1,10 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {MatDialogRef, MatSnackBar, MatTableDataSource} from '@angular/material';
 import {FlowGraphItem, FlowGraphModelItem} from '../../../_models/flowgraph-item';
-import {FlowGraphItemService} from '../../../services/flowgraph-item.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { LoaderService } from '../../../services/loader.service';
 import { Subscription } from 'rxjs';
 import { ContainedDialogBase } from '../../../_models/dialog-models';
-import { DialogContainerService } from '../../../services/dialog-container.service';
+import { FlowGraphItemService, DialogContainerService } from '../../../_services';
 
 @Component({
   selector: 'app-load-flowgraph',
@@ -31,7 +29,6 @@ export class LoadFlowGraphComponent extends ContainedDialogBase implements OnIni
 
 
   constructor(private database: FlowGraphItemService,
-              public loaderService: LoaderService,
               public dialogRef: MatDialogRef<LoadFlowGraphComponent>,
               public snackBar: MatSnackBar,
               public dialogContainerService: DialogContainerService) {
