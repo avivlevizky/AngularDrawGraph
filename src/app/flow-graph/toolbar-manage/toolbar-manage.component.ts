@@ -23,7 +23,7 @@ export class ToolbarManageComponent implements OnInit {
 
   // Constants for dialog size
   readonly WIDTH_DIALOG = '700px';
-  readonly HEIGHT_DIALOG = '700px';
+  readonly HEIGHT_DIALOG = '560px';
 
   constructor(private dialog: MatDialog,
               private impotGraphService: ImportGraphService) { }
