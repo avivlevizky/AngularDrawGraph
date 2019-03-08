@@ -1,0 +1,43 @@
+
+#toolbarContainer{
+    position : absolute;
+    overflow : hidden;
+	padding : 2px;
+	left :0px;
+    top : 26px;
+	width : auto;
+    bottom: 0px;
+}
+
+#toolbarContainer button{
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+
+
+img.mxToolbarModeSelected {
+    margin: 0px;
+    margin-right: 4px;
+    margin-left: 15px;
+
+    margin-bottom: 4px;
+    border-style: none; 
+    width: 55px;
+
+}
+
+img.mxToolbarMode {
+    margin: 0px;
+    margin-right: 4px;
+    margin-left: 15px;
+
+    margin-bottom: 4px;
+    border-width: 0px;
+    width: 55px;
+
+}
+
+

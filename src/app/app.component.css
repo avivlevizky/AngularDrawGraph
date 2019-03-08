@@ -1,9 +1,0 @@
-h1.app-name{
-    margin-left: 8px;
-}
-
-
-.bd-navbar .navbar-nav .nav-link.active, .bd-navbar .navbar-nav .nav-link:hover {
-    color: #fff;
-    background-color: transparent;
-  }

@@ -4,12 +4,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FlexLayoutModule} from '@angular/flex-layout';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
-import { LoaderModule } from './_loader/loader.module';
-import { ImportGraphService } from './_services';
-import { LoaderService } from './_services';
-import { DialogContainerService } from './_services';
-import { TokenInterceptor, ErrorInterceptor } from './_helpers';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { ImportGraphService, LoaderService, DialogContainerService } from './services';
+import { TokenInterceptor, ErrorInterceptor, LoaderInterceptor } from './helpers';
+import { ClipboardModule } from 'ngx-clipboard';
+import { LoaderModule } from './components/loader/loader.module';
 
 
 @NgModule({
@@ -20,7 +19,8 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     ReactiveFormsModule,
     FlexLayoutModule,
     NgxJsonViewerModule,
-    LoaderModule,
+    ClipboardModule,
+    LoaderModule
   ],
   exports: [
     MaterialModule,
@@ -29,15 +29,17 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     ReactiveFormsModule,
     FlexLayoutModule,
     NgxJsonViewerModule,
-    LoaderModule,
     OAuthModule,
+    ClipboardModule,
+    LoaderModule
   ],
   providers: [
     ImportGraphService,
     LoaderService,
     DialogContainerService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     ]
 })
 export class SharedModule { }

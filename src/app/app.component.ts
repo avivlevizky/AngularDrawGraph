@@ -1,8 +1,7 @@
 import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
-import { User } from './_models';
+import { User } from './models';
 import { Router } from '@angular/router';
-import { AuthenticationService } from './_services';
-import {  AuthConfig, OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
+import { AuthConfig, OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from 'src/environments/environment.prod';
 
@@ -35,30 +34,27 @@ export class AppComponent implements OnInit {
   title = 'FlowGraph Web';
   currentUser: User;
 
-    constructor(
-        private router: Router,
-        @Inject(PLATFORM_ID) private platformId: object,
-        private oauthService: OAuthService
-    ) {
-        if (isPlatformBrowser(this.platformId)) {
-          this.oauthService.configure(authConfig);
-          this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-          this.oauthService.loadDiscoveryDocumentAndTryLogin();
-      }
+  constructor(@Inject(PLATFORM_ID) private platformId: object,
+              private oauthService: OAuthService) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.oauthService.configure(authConfig);
+      this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+      this.oauthService.loadDiscoveryDocumentAndTryLogin();
     }
+  }
 
-    ngOnInit() {
-      if (isPlatformBrowser(this.platformId)) {
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
 
-          this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
-              if (
-                  !this.oauthService.hasValidIdToken() ||
-                  !this.oauthService.hasValidAccessToken()
-              ) {
-                  this.oauthService.initImplicitFlow();
-              }
-          });
-      }
+      this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
+        if (
+          !this.oauthService.hasValidIdToken() ||
+          !this.oauthService.hasValidAccessToken()
+        ) {
+          this.oauthService.initImplicitFlow();
+        }
+      });
+    }
   }
 }
 

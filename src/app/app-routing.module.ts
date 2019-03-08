@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './_guards';
-import { CallbackComponent } from './_components';
+import { Routes, RouterModule, LoadChildrenCallback } from '@angular/router';
+import { AuthGuard } from './guards';
+import { AppFlowGraphModule } from './components/flow-graph/flow-graph.module';
+import { CallbackComponent } from './components/callback/callback.component';
 
+const callBackFlowGraphModule: LoadChildrenCallback = () => AppFlowGraphModule;
 
 const routes: Routes = [
-  { path: 'flow_graph', loadChildren: './flow-graph/flow-graph.module#AppFlowGraphModule', canActivate: [AuthGuard]},
+  { path: 'flow_graph', loadChildren: callBackFlowGraphModule, canActivate: [AuthGuard]},
   { path: 'callback', component: CallbackComponent },
 
   // otherwise redirect to home

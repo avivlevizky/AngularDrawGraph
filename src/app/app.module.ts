@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DeleteComponent } from './_dialogs/delete/delete.component';
 import { SharedModule } from './shared.module';
-import { DialogContainerComponent } from './_dialogs/dialog-container/dialog-container.component';
-import { DynamicAnchorDirective } from './_dialogs/dialog-container/dynamic-anchor/dynamic-anchor.directive';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './login';
-import { RegisterComponent } from './register';
-import { AlertComponent, CallbackComponent } from './_components';
+import { AppFlowGraphModule } from './components/flow-graph/flow-graph.module';
+import { DeleteComponent } from './components/dialogs/delete/delete.component';
+import { DialogContainerComponent } from './components/dialogs/dialog-container/dialog-container.component';
+import { DynamicAnchorDirective } from './components/dialogs/dialog-container/dynamic-anchor/dynamic-anchor.directive';
+import { AlertComponent } from './components/alert/alert.component';
+import { CallbackComponent } from './components/callback/callback.component';
 
 
 @NgModule({
@@ -20,16 +20,15 @@ import { AlertComponent, CallbackComponent } from './_components';
     DialogContainerComponent,
     DynamicAnchorDirective,
     AlertComponent,
-    LoginComponent,
-    RegisterComponent,
     CallbackComponent
-  ],
+    ],
   imports: [
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
     HttpClientModule,
-    OAuthModule.forRoot()
+    OAuthModule.forRoot(),
+    AppFlowGraphModule
   ],
   bootstrap: [AppComponent],
   entryComponents: [
