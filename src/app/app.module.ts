@@ -1,3 +1,4 @@
+import { OAuthModule } from 'angular-oauth2-oidc';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -9,7 +10,7 @@ import { DynamicAnchorDirective } from './_dialogs/dialog-container/dynamic-anch
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
-import { AlertComponent } from './_components';
+import { AlertComponent, CallbackComponent } from './_components';
 
 
 @NgModule({
@@ -20,13 +21,15 @@ import { AlertComponent } from './_components';
     DynamicAnchorDirective,
     AlertComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    OAuthModule.forRoot()
   ],
   bootstrap: [AppComponent],
   entryComponents: [

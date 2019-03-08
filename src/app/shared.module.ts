@@ -8,7 +8,9 @@ import { LoaderModule } from './_loader/loader.module';
 import { ImportGraphService } from './_services';
 import { LoaderService } from './_services';
 import { DialogContainerService } from './_services';
-import { JwtInterceptor, ErrorInterceptor } from './_helpers';
+import { TokenInterceptor, ErrorInterceptor } from './_helpers';
+import { OAuthModule } from 'angular-oauth2-oidc';
+
 
 @NgModule({
   imports: [
@@ -18,7 +20,7 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
     ReactiveFormsModule,
     FlexLayoutModule,
     NgxJsonViewerModule,
-    LoaderModule
+    LoaderModule,
   ],
   exports: [
     MaterialModule,
@@ -27,13 +29,14 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
     ReactiveFormsModule,
     FlexLayoutModule,
     NgxJsonViewerModule,
-    LoaderModule
+    LoaderModule,
+    OAuthModule,
   ],
   providers: [
     ImportGraphService,
     LoaderService,
     DialogContainerService,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
     ]
 })

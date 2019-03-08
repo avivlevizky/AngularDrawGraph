@@ -1,18 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login';
-import { RegisterComponent } from './register';
 import { AuthGuard } from './_guards';
+import { CallbackComponent } from './_components';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'flow_graph', pathMatch: 'full'}, // empty part is the root route
   { path: 'flow_graph', loadChildren: './flow-graph/flow-graph.module#AppFlowGraphModule', canActivate: [AuthGuard]},
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'callback', component: CallbackComponent },
 
   // otherwise redirect to home
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'callback' }
 ];
 
 @NgModule({

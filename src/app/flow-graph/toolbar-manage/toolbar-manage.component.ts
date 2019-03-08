@@ -1,10 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ImportGraphService } from 'src/app/_services';
 import { MatDialog } from '@angular/material';
-import { LoadFlowGraphComponent } from '../toolbar-flow-graph/load-flowgraph/load-flowgraph.component';
-import { JsonOverviewFlowGraphComponent } from '../toolbar-flow-graph/json-overview-flowgraph/json-overview-flowgraph.component';
-import { SaveFlowgraphComponent } from '../toolbar-flow-graph/save-flowgraph/save-flowgraph.component';
 import { Vertex, Edge, ShapeFlowType } from 'src/app/_models';
+import { LoadFlowGraphComponent, JsonOverviewFlowGraphComponent, SaveFlowgraphComponent } from '.';
+
 
 declare var require: any;
 const Graph = require('../../../../node_modules/graph-data-structure');

@@ -4,7 +4,50 @@ services:
     build:
       context: .
       args:
-        env: prod
+        env: dev
     ports:
       - "443:443"
+  # apigw-base:
+  #   image: apigwbase:dev
+  #   depends_on:
+  #       - botflowgraph-webapi
+  #       - botflowgraph-identity
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=https://0.0.0.0:443;http://0.0.0.0:80
+  #     - ASPNETCORE_HTTPS_PORT=44328
+  #   ports:
+  #     - "54232:80"
+  #     - "44328:443"
+  # botflowgraph-identity:
+  #   image: botflowgraph.identity:dev
+  #   depends_on:
+  #       - sqlserver
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=https://0.0.0.0:443;http://0.0.0.0:80
+  #   ports:
+  #     - "44329:443"
+  # botflowgraph-webapi:
+  #   image: botflowgraph.webapi:dev
+  #   depends_on:
+  #       - mongo-db
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=https://0.0.0.0:443;http://0.0.0.0:80   
+  # mongo-db:
+  #   image: mongo:latest
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=root
+  #     - MONGO_INITDB_ROOT_PASSWORD=12345678
+  #     - MONGO_INITDB_DATABASE=admin
+  #   ports:
+  #     - "27017:27017"
+  # sqlserver:
+  #   image: mcr.microsoft.com/mssql/server
+  #   environment:
+  #     - SA_PASSWORD=Jko3va-D9821jhsvGD
+  #     - ACCEPT_EULA=Y
+  #   ports:
+  #     - "1434:1433"
     

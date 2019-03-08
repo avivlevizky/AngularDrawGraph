@@ -43,9 +43,7 @@ export class LoadFlowGraphComponent extends ContainedDialogBase implements OnIni
     this.subscription = this.database.getAllFlowGraphItems().subscribe({
       next: data => this.dataSource.data = data,
       error: err => console.error(err),
-      complete: () => {this.isLoadingResults = false;
-                       console.log(this.dataSource.data);
-                       }
+      complete: () => { this.isLoadingResults = false; }
     });
   }
 

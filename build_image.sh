@@ -1,1 +1,1 @@
-docker build -t botflowgraph.client:dev --build-arg configuration="" .
+docker-compose up --build -d

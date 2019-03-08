@@ -23,7 +23,7 @@ export class FlowGraphItemService {
 
   getAllFlowGraphItems(): Observable<FlowGraphItem[]> {
     return this.http.get<FlowGraphItem[]>(`${this.baseUrl}/`,
-    {withCredentials: false});
+    {withCredentials: true});
   }
 
 
