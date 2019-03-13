@@ -8,7 +8,18 @@
             [codec]='codec'>
         </app-toolbar-manage>
 
-        
+        <span fxFlex></span>
+
+        <button  mat-button [matMenuTriggerFor]="menu">
+            <span>{{userProfileName}}</span>
+            <mat-icon>account_circle</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="logOut()">
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Log Out</span>
+            </button>
+          </mat-menu>
     </mat-toolbar-row>
     </mat-toolbar>
   </nav> 

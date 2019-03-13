@@ -1,15 +1,17 @@
-import {AfterViewInit, Component, ElementRef, ViewChild, OnDestroy, Input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, OnDestroy, Input, OnInit } from '@angular/core';
 import { URL_IMAGE_BACKGROUND } from './data';
 import { Subscription } from 'rxjs';
 import { ImportGraphService, LoaderService } from 'src/app/services';
-import { JsonGraph, ShapeFlowType } from 'src/app/models';
+import { JsonGraph, ShapeFlowType, UserInfo } from 'src/app/models';
+import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-flow-graph',
   templateUrl: './flow-graph.component.html',
   styleUrls: ['./flow-graph.component.css']
 })
-export class FlowGraphComponent implements AfterViewInit, OnDestroy {
+export class FlowGraphComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('graphContainer') graphContainer: ElementRef;
 
   /*Properties*/
@@ -21,35 +23,45 @@ export class FlowGraphComponent implements AfterViewInit, OnDestroy {
   subscriptionJsonImport: Subscription;
   subscriptionMxGraphModelImport: Subscription;
   codec: mxCodec;
-
+  userProfileName: string;
 
   constructor(private importGraph: ImportGraphService,
-              public loaderService: LoaderService) {
-      this.editor = new mxEditor();
-      this.graph =  this.editor.graph;
-      this.toolbar = this.editor.toolbar;
-      this.codec = new mxCodec();
-      this.subscriptionJsonImport = this.importGraph.getGraphAsJSON().subscribe(jsonGraph => {
-        try {
-          const parsedGraph: JsonGraph = JSON.parse(jsonGraph);
-          this.importJsonToGraph(parsedGraph);
-        } catch (e) {
-          console.exception('Exception on init the flowGraph component' + e);
-          alert('Invalid JSON graph input');
-        }
+              private oauthService: OAuthService,
+              private oauthStorage: OAuthStorage,
+              private loaderService: LoaderService) {
+    this.editor = new mxEditor();
+    this.graph = this.editor.graph;
+    this.toolbar = this.editor.toolbar;
+    this.codec = new mxCodec();
+    this.subscriptionJsonImport = this.importGraph.getGraphAsJSON().subscribe(jsonGraph => {
+      try {
+        const parsedGraph: JsonGraph = JSON.parse(jsonGraph);
+        this.importJsonToGraph(parsedGraph);
+      } catch (e) {
+        console.exception('Exception on init the flowGraph component' + e);
+        alert('Invalid JSON graph input');
+      }
 
-      });
+    });
 
-      this.subscriptionMxGraphModelImport = this.importGraph.getXmlGraphAsObservable().subscribe(data => {
-        try {
-          this.importXMLToGraph(data._id, data._t, data.xml);
-        } catch (e) {
-          alert('Invalid mxGraphModel object');
-        }
+    this.subscriptionMxGraphModelImport = this.importGraph.getXmlGraphAsObservable().subscribe(data => {
+      try {
+        this.importXMLToGraph(data._id, data._t, data.xml);
+      } catch (e) {
+        alert('Invalid mxGraphModel object');
+      }
 
-      });
+    });
   }
 
+  ngOnInit() {
+    this.userProfileName = this.oauthStorage.getItem('preferred_username');
+    if (isNullOrUndefined(this.userProfileName)) {
+      this.oauthService.loadUserProfile().then((x: UserInfo) => {
+        this.userProfileName = x.preferred_username;
+      });
+    }
+  }
 
 
   ngAfterViewInit() {
@@ -74,15 +86,19 @@ export class FlowGraphComponent implements AfterViewInit, OnDestroy {
 
     /*Temporary: only the check how the graph render/proccess the json graph from data.ts file*/
     // this.importJsonToGraph(GraphDataExample);
-    }
+  }
 
 
-   ngOnDestroy() {
+  ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     this.subscriptionJsonImport.unsubscribe();
     this.subscriptionMxGraphModelImport.unsubscribe();
+  }
 
- }
+  logOut() {
+    this.oauthService.logOut();
+  }
+
 
 
   // Helper function that help us the know the direction of the wheel mouse scroll
@@ -100,20 +116,20 @@ export class FlowGraphComponent implements AfterViewInit, OnDestroy {
   private importXMLToGraph(id?: string, t?: string, xmlGraph?: string) {
     const currentGraphModel: mxGraphModel = this.editor.graph.getModel();
     try {
-        currentGraphModel.beginUpdate();
-        this.editor.graph.removeCells(this.editor.graph.getChildVertices(this.editor.graph.getDefaultParent()));
-        currentGraphModel.clear();
-        if (xmlGraph != null) {
-          const parsedXML = mxUtils.parseXml(xmlGraph);
-          const decodedGraph: mxGraphModel = this.codec.decode(parsedXML.documentElement);
-          currentGraphModel.cells = decodedGraph.cells;
-          currentGraphModel.nextId = decodedGraph.nextId;
-          currentGraphModel.root = decodedGraph.root;
-        }
-     } catch (e) {
-       alert('Unable to decode to given XML');
-       console.exception('Unable in importXMLToGraph when decode the given XML: ' + e);
-     } finally {
+      currentGraphModel.beginUpdate();
+      this.editor.graph.removeCells(this.editor.graph.getChildVertices(this.editor.graph.getDefaultParent()));
+      currentGraphModel.clear();
+      if (xmlGraph != null) {
+        const parsedXML = mxUtils.parseXml(xmlGraph);
+        const decodedGraph: mxGraphModel = this.codec.decode(parsedXML.documentElement);
+        currentGraphModel.cells = decodedGraph.cells;
+        currentGraphModel.nextId = decodedGraph.nextId;
+        currentGraphModel.root = decodedGraph.root;
+      }
+    } catch (e) {
+      alert('Unable to decode to given XML');
+      console.exception('Unable in importXMLToGraph when decode the given XML: ' + e);
+    } finally {
       currentGraphModel.graphID = id;
       currentGraphModel.graphTitle = t;
       currentGraphModel.endUpdate();
@@ -121,10 +137,10 @@ export class FlowGraphComponent implements AfterViewInit, OnDestroy {
       // currentGraphModel.execute();
       // new mxGraphLayout(this.graph).execute(this.graph.getDefaultParent());
       // new mxHierarchicalLayout(this.graph, 'west').execute(this.graph.getDefaultParent());
-     }
+    }
   }
 
- // Helper function that help us to process the given json graph into valid mxgraph
+  // Helper function that help us to process the given json graph into valid mxgraph
   private importJsonToGraph(jsonGraph: JsonGraph) {
     const _id = jsonGraph._id;
     const Title = jsonGraph._t;
@@ -143,7 +159,7 @@ export class FlowGraphComponent implements AfterViewInit, OnDestroy {
       Vertices.forEach((node) => {
         switch (node.Type) {
           case ShapeFlowType.Start: {
-            temp =  this.graph.insertVertex(parent, node.VertexId, node.Text, 0, 0, 90, 90, 'shape=star;whiteSpace=wrap;');
+            temp = this.graph.insertVertex(parent, node.VertexId, node.Text, 0, 0, 90, 90, 'shape=star;whiteSpace=wrap;');
             break;
           }
           case ShapeFlowType.Action: {

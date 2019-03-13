@@ -1,6 +1,4 @@
 import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
-import { User } from './models';
-import { Router } from '@angular/router';
 import { AuthConfig, OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from 'src/environments/environment.prod';
@@ -21,7 +19,7 @@ const authConfig: AuthConfig = {
   // set the scope for the permissions the client should request
   // The first three are defined by OIDC. The 4th is a usecase-specific on
   scope: 'openid profile BotWebAPI',
-  postLogoutRedirectUri: environment.authUrl + '/signout-callback-oidc'
+  postLogoutRedirectUri: 'https://localhost:4200/callback'
 };
 
 
@@ -32,7 +30,6 @@ const authConfig: AuthConfig = {
 })
 export class AppComponent implements OnInit {
   title = 'FlowGraph Web';
-  currentUser: User;
 
   constructor(@Inject(PLATFORM_ID) private platformId: object,
               private oauthService: OAuthService) {

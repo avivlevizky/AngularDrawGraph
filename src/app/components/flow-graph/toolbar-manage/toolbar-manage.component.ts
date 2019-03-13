@@ -135,6 +135,7 @@ export class ToolbarManageComponent implements OnInit {
             }
           }
         graph.addNode(parseInt(id, 10));
+        console.log(id);
         nodesDict[parseInt(id, 10)] = {Type: type, Text: mxCells[id].value, VertexId: parseInt(id, 10)};
         yCorrdinates[parseInt(id, 10)] = mxCells[id].geometry.y;
         }
@@ -145,17 +146,21 @@ export class ToolbarManageComponent implements OnInit {
         }
       }
 
-    const graphVertices: number[] = graph.topologicalSort();
+    const graphVertices: string[] = graph.topologicalSort();
 
     for (const v of graphVertices) {
-        const parentId: number =  v.valueOf();
+        const parentId: number =  parseInt(v, 10);
         if (!vertices.find((node) => (node.VertexId === parentId))) {
           vertices.push(nodesDict[parentId]);
         }
 
         const childrensVertices: number[] = graph.adjacent(parentId);
         childrensVertices.sort((n1, n2) =>  yCorrdinates[n1] - yCorrdinates[n2]);
-        childrensVertices.forEach((nodeId) => vertices.push(nodesDict[nodeId]));
+        childrensVertices.forEach((nodeId) => {
+          if (!vertices.find((node) => node.VertexId === nodeId)) {
+            vertices.push(nodesDict[nodeId]);
+          }
+        });
 
       }
 

@@ -1,5 +1,8 @@
 
 <app-loader show = 'true'></app-loader>
+<button mat-dialog-close mat-mini-fab color="primary" style='left: 95%; width: 40px; height: 40px'>
+  <mat-icon>close</mat-icon>
+</button>
 <div [class.ops]="isLoadingResults">
     <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">

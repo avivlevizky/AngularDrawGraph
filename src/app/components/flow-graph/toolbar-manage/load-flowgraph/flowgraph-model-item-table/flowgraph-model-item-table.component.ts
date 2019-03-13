@@ -17,7 +17,7 @@ export class FlowGraphModelItemTableComponent {
   @Input() dialogRef: MatDialogRef<LoadFlowGraphComponent>;
 
 
-  displayedColumns: string[] = [ 'Actions', 'TimeStamp', 'Comment'];
+  displayedColumns: string[] = [ 'Actions', 'TimeStamp', 'Comment', 'IdentityName'];
 
   constructor(private database: FlowGraphItemService,
               private impotGraphService: ImportGraphService,

@@ -10,4 +10,5 @@ export interface FlowGraphModelItem {
     comment: string;
     xml: string;
     json: any;
+    identityName: string;
 }

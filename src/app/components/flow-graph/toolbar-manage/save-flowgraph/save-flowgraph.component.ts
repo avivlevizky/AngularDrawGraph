@@ -1,9 +1,11 @@
 import {Component, OnInit, Inject, OnDestroy} from '@angular/core';
 import {MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
-import { FlowGraphItem, MatCardType, FlowGraphModelItem } from 'src/app/models';
+import { FlowGraphItem, MatCardType, FlowGraphModelItem, UserInfo } from 'src/app/models';
 import { Observable, Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { FlowGraphItemService, LoaderService } from 'src/app/services';
+import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-save-flowgraph-tab',
@@ -26,12 +28,15 @@ export class SaveFlowgraphComponent implements OnInit, OnDestroy {
   subscriptionsList: Subscription[];
   matCardName: MatCardType;
   isExistingGraph: boolean;
+  userProfileName: string;
 
   constructor(private flowGraphItemService: FlowGraphItemService,
               public dialogRef: MatDialogRef<SaveFlowgraphComponent>,
               @Inject(MAT_DIALOG_DATA) data: any,
               public snackBar: MatSnackBar,
-              private loaderService: LoaderService) {
+              private loaderService: LoaderService,
+              private oauthService: OAuthService,
+              private oauthStorage: OAuthStorage) {
       this.xml = data.xml;
       this.json = data.json;
       this.graphID = data._id;
@@ -41,14 +46,18 @@ export class SaveFlowgraphComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.initNewFlowGraphForm();
-    this.isLoadingResults = true;
-    this.subscriptionsList = [];
-    this.subscriptionsList.push(this.loaderService.loaderState.subscribe(state => this.isLoadingResults = state.show));
-    this.subscriptionsList.push(this.flowGraphItemService.getAllFlowGraphItems().subscribe(data => {
-         this.checkExistFlowGraphAndFillData(data);
-      })
-    );
+    this.oauthService.loadUserProfile().then((x: UserInfo) => {
+      this.userProfileName = x.preferred_username;
+    }).finally(() => {
+      this.initNewFlowGraphForm();
+      this.isLoadingResults = true;
+      this.subscriptionsList = [];
+      this.subscriptionsList.push(this.loaderService.loaderState.subscribe(state => this.isLoadingResults = state.show));
+      this.subscriptionsList.push(this.flowGraphItemService.getAllFlowGraphItems().subscribe(data => {
+           this.checkExistFlowGraphAndFillData(data);
+        })
+      );
+    });
   }
 
 
@@ -84,7 +93,9 @@ export class SaveFlowgraphComponent implements OnInit, OnDestroy {
       timeStamp: new FormControl(new Date()),
       comment: new FormControl(''),
       xml: new FormControl(this.xml),
-      json: new FormControl(this.json)
+      json: new FormControl(this.json),
+      identityName: new FormControl(this.userProfileName)
+
     });
 
 
@@ -126,6 +137,7 @@ export class SaveFlowgraphComponent implements OnInit, OnDestroy {
         const clonedObjectJSON: any = clonedObject.json;
         clonedObjectJSON._t = this.choosenFlowGraph._t;
         clonedObject.json = JSON.stringify(clonedObjectJSON);
+        clonedObject.identityName = this.userProfileName;
         this.choosenFlowGraph.flowGraphs.push(clonedObject);
         this.flowGraphItemService.updateFlowGraphItem(this.choosenFlowGraph._id, this.choosenFlowGraph)
         .subscribe({
